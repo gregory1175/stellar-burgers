@@ -1,6 +1,6 @@
-import { getIngredientsApi } from '../../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
+import { getIngredientsApi } from '../../../utils/burger-api';
 
 export type TIngredientState = {
   ingredients: TIngredient[];
@@ -24,7 +24,7 @@ export const ingredientSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    getIngredientState: (state) => state
+    getIngredientState: (state: TIngredientState) => state
   },
   extraReducers: (builder) => {
     builder
