@@ -74,7 +74,7 @@ const App: React.FC = () => {
             path='/feed/:number'
             element={
               <Modal
-                title={'Номер заказа'}
+                title={`#${location.pathname.match(/\d+/)}`}
                 onClose={() => {
                   history.back();
                 }}
@@ -88,7 +88,7 @@ const App: React.FC = () => {
               path='/profile/orders/:number'
               element={
                 <Modal
-                  title={'Номер заказа'}
+                  title={`#${location.pathname.match(/\d+/)}`}
                   onClose={() => {
                     history.back();
                   }}
