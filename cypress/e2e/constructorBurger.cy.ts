@@ -1,5 +1,5 @@
 import Cypress from 'cypress';
-import { clickButton } from 'cypress/utils/utils';
+import { clickButton } from '../utils/utils';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api';
 const ID_PRODUCT_FILLING = `[data-cy=${'643d69a5c3f7b9001cfa094a'}]`;
@@ -11,9 +11,6 @@ beforeEach(() => {
     fixture: 'ingredients.json'
   });
   cy.intercept('POST', `${BASE_URL}/auth/login`, {
-    fixture: 'user.json'
-  });
-  cy.intercept('GET', `${BASE_URL}/auth/user`, {
     fixture: 'user.json'
   });
   cy.intercept('POST', `${BASE_URL}/orders`, {
@@ -64,24 +61,35 @@ describe('Тестирование открытия и закрытия мода
     cy.get(`[data-cy='overlay']`).click({ force: true });
     cy.get('@modal').should('be.empty');
   });
-});
 
-describe('Тест на оформление заказа', () => {
-  beforeEach(() => {
-    window.localStorage.setItem('refreshToken', 'ipsum');
-    cy.setCookie('accessToken', 'lorem');
-    cy.getAllLocalStorage().should('not.be.empty');
-    cy.getCookie('accessToken').should('not.be.empty');
-  });
-  afterEach(() => {
-    window.localStorage.clear();
-    cy.clearAllCookies();
-    cy.getAllLocalStorage().should('be.empty');
-    cy.getAllCookies().should('be.empty');
-  });
-  it('Отправка заказа и проверка ответа', () => {
-    cy.get(ID_FIRST_BUN).children('button').click();
-    cy.get(ID_PRODUCT_FILLING).children('button').click();
-    cy.get(`[data-cy='order-button']`).click();
+  describe('Авторизация пользователя и оформление заказа', () => {
+    beforeEach(() => {
+      window.localStorage.setItem('refreshToken', 'ipsum');
+      cy.setCookie('accessToken', 'lorem');
+      cy.getAllLocalStorage().should('be.not.empty');
+      cy.getCookie('accessToken').should('be.not.empty');
+    });
+    afterEach(() => {
+      window.localStorage.clear();
+      cy.clearAllCookies();
+      cy.getAllLocalStorage().should('be.empty');
+      cy.getAllCookies().should('be.empty');
+    });
+    const inputEmal = 'input[name=email]';
+    const inputPassword = 'input[name=password]';
+    const testUser = {
+      email: 'Test@mail.ru',
+      password: 'Test'
+    };
+    it('Авторизуемся и оформляем заказ', () => {
+      cy.visit('http://localhost:4000/login');
+      cy.get(inputEmal).click().type(testUser.email);
+      cy.get(inputPassword).click().type(testUser.password);
+      cy.contains('button', 'Войти').click();
+      cy.location('pathname', { timeout: 1000 }).should('eq', '/');
+      cy.get(ID_PRODUCT_FILLING).children('button').click();
+      cy.get(ID_SECOND_BUN).children('button').click();
+      cy.contains('Оформить заказ').should('be.enabled').click();
+    });
   });
 });

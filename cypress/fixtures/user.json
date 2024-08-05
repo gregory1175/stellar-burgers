@@ -3,7 +3,7 @@
   "accessToken": "lorem",
   "refreshToken": "ipsum",
   "user": {
-    "email": "mrsmith@mail.ru",
-    "name": "MrSmith"
+    "email": "Test@mail.ru",
+    "name": "Test"
   }
 }
