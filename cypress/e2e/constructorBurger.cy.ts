@@ -82,7 +82,7 @@ describe('Тестирование открытия и закрытия мода
       password: 'Test'
     };
     it('Авторизуемся и оформляем заказ', () => {
-      cy.visit('http://localhost:4000/login');
+      cy.visit('/login');
       cy.get(inputEmal).click().type(testUser.email);
       cy.get(inputPassword).click().type(testUser.password);
       cy.contains('button', 'Войти').click();

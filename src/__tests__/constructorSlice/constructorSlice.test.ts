@@ -10,16 +10,6 @@ import constructorSlice, {
 
 describe('Тестирование редьюсера constructorSlice', () => {
   describe('Тестирование экшена addIngredient', () => {
-    const initialState = {
-      constructorItems: {
-        bun: null,
-        ingredients: []
-      },
-      loading: false,
-      orderRequest: false,
-      orderModalData: null,
-      error: null
-    };
     const dataResult = {
       ...initialState,
       constructorItems: {
