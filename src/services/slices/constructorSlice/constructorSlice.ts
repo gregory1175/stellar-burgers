@@ -83,7 +83,7 @@ export const constructorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(orderBurger.pending, (state, action) => {
+      .addCase(orderBurger.pending, (state) => {
         state.loading = true;
         state.orderRequest = true;
         state.error = null;

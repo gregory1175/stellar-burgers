@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "lorem",
+  "refreshToken": "ipsum",
+  "user": {
+    "email": "Test@mail.ru",
+    "name": "Test"
+  }
+}
